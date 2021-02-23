@@ -1,0 +1,128 @@
+# Week 5 Lab
+
+
+---
+title: "Week 5 Lab"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```plot(sin)
+```
+## Change it so that the x axis label is ?? and the y axis label is ??. Those are the Greek letters "sigma" and "tau", respectively.
+```
+plot(sin, xlab = expression(sigma), ylab = expression(tau))
+```
+
+## Take the same plot, and change the x axis label to sigma^(2/s).
+```
+plot(sin, xlab = expression(sigma[s]^2), ylab = expression(tau))
+````
+
+## For the same plot as above, change the plot so that the line is red, "dot-dash", and 3 times the default line thickness
+```
+plot(sin, xlab = expression(sigma[s]^2), ylab = expression(tau), lty=4, col="red", lwd=3)
+```
+
+## Take the graph we started with, and assume there's a variable y = 7. Add a title to the graph that says tau=7.
+### ********HELP*******
+```
+plot(sin, main = bquote(expression(tau)) == 7)
+```
+
+
+## Add a text element at coordinates x=0.1, y=0.4 to the graph that says ??=7.
+```
+plot(sin)
+text(0.1, 0.4, expression((sigma) == 7))
+```
+
+
+## Save Plot as pdf with 18 point font, 10" by 10" square
+```
+pdf(file = "C:/Users/lbradle1/Desktop/AdvancedInformatics2021/pdf1.pdf", width = 10, height = 10, pointsize = 18)
+pdf1.pdf <- plot(sin, xlab = expression(sigma[s]^2), ylab = expression(tau), lty=4, col="red", lwd=3)
+dev.off()
+```
+
+
+## Save as tiff with 18 point font, 10" by 10" square and the x axis font is 1/2 the global font size.
+### ******NEED HELP WITH PAR******
+### Can't figure out how to use cex.lab on only x axis
+```
+tiff(file = "C:/Users/lbradle1/Desktop/AdvancedInformatics2021/png1.png", width = 10, height = 10, pointsize = 18)
+tiff1.tiff <- plot(sin, xlab = (expression(sigma[s]^2)), ylab = expression(tau),cex.lab = 0.5)
+dev.off()
+```
+
+## Save as 72 dpi png with 18 point font, 10" by 10" square
+```
+png(file = "C:/Users/lbradle1/Desktop/AdvancedInformatics2021/tiff1.tiff", width = 10, height = 10, units = "in", pointsize = 18, res = 72)
+tiff1.tiff <- plot(sin, xlab = expression(sigma[s]^2), ylab = expression(tau))
+dev.off()
+```
+
+## Save as 300 dpi png with 18 point font, 10" by 10" square 
+```
+png(file = "C:/Users/lbradle1/Desktop/AdvancedInformatics2021/tiff2.tiff", width = 10, height = 10, units = "in", pointsize = 18, res = 300)
+tiff2.tiff <- plot(sin, xlab = expression(sigma[s]^2), ylab = expression(tau))
+dev.off()
+```
+
+# Now to use ggplot
+```
+library(ggplot2)
+data(mtcars)
+p = ggplot(mtcars, aes(x=cyl, y = mpg)) + geom_point()
+p
+```
+
+## Change it so that the x axis label is ?? and the y axis label is ??. Those are the Greek letters "sigma" and "tau", respectively.
+```
+p1 = ggplot(mtcars, aes(x=cyl, y = mpg)) + geom_point() + labs(y = expression(tau), x = expression(sigma))  
+p1
+```
+
+## Take the same plot, and change the x axis label to ??2s.
+```
+p2 = ggplot(mtcars, aes(x=cyl, y = mpg)) + geom_point() + labs(y = expression(tau), x = expression(sigma[s]^2))  
+p2
+```
+
+## For the same plot as above, change the plot so that the line is red, different shape, and 3 times the default line thickness
+```
+p3 = ggplot(mtcars, aes(x=cyl, y = mpg)) + geom_point(shape = 15, color = "red", size = 3) + labs(y = expression(tau), x = expression(sigma[s]^2)) 
+p3
+```
+
+## Take the graph we started with, and assume there's a variable y = 7. Add a title to the graph that says ??=7.
+### **** NEED HELP NOT RIGHT****
+```
+p = ggplot(mtcars, aes(x=cyl, y = mpg)) + geom_point()
+p
+```
+
+## Add a text element at coordinates x=0.1, y=0.4 to the graph that says ??=7.
+### **** NEED HELP NOT RIGHT****
+```
+p = ggplot(mtcars, aes(x=cyl, y = mpg)) + geom_point() + geom_text(x=1, y=25, label = expression((sigma) == 7))
+p
+```
+
+## Also, use the ggpubr library to plot two ggplots side by side. (It is fine to plot the same plot next to itself.)
+```
+install.packages("ggpubr")
+library(ggpubr)
+ggarrange(p2, p3, ncol = 2, labels = c("A", "B"))
+```
+
+## Do it again, but as a 2x2 matrix of 4 plots.
+```
+ggarrange(ggarrange(p2, p3, ncol = 2, labels = c("A", "B")), nrow = 2, ggarrange(p2, p3, ncol = 2, labels = c("C", "D")))
+```
+
+
+
